@@ -48,14 +48,14 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+	public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    /**
+	/**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -92,14 +92,14 @@ class User implements UserInterface
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): self
+	public function setPassword(string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
 
-    /**
+	/**
      * @see UserInterface
      */
     public function getSalt()
@@ -107,7 +107,7 @@ class User implements UserInterface
         // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    /**
+	/**
      * @see UserInterface
      */
     public function eraseCredentials()
