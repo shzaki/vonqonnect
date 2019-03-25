@@ -21,6 +21,12 @@ security:
                     - App\Security\LoginFormAuthenticator
                     #- App\Security\TokenAuthenticator
 
+            logout:
+                path: app_logout
+
+                # where to redirect after logout
+                # target: app_any_route
+
             # activate different ways to authenticate
 
             # http_basic: true
