@@ -35,6 +35,11 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $apiToken;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,11 +51,11 @@ class User implements UserInterface
     }
 
 	public function setEmail(string $email): self
-          {
-              $this->email = $email;
-      
-              return $this;
-          }
+                   {
+                       $this->email = $email;
+               
+                       return $this;
+                   }
 
 	/**
      * A visual identifier that represents this user.
@@ -90,11 +95,11 @@ class User implements UserInterface
     }
 
 	public function setPassword(string $password): self
-          {
-              $this->password = $password;
-      
-              return $this;
-          }
+	{
+	   $this->password = $password;
+
+	   return $this;
+	}
 
 	/**
      * @see UserInterface
@@ -121,6 +126,18 @@ class User implements UserInterface
     public function setFullName(string $full_name): self
     {
         $this->full_name = $full_name;
+
+        return $this;
+    }
+
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(string $apiToken): self
+    {
+        $this->apiToken = $apiToken;
 
         return $this;
     }
