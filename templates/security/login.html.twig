@@ -2,7 +2,6 @@
 
 {% block title %}Log in!{% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
     <style>
         body {
             background-color: #fff;
@@ -40,16 +39,10 @@
     </style>
 {% endblock %}
 {% block body %}
-<div class="container">
     <form method="post" class="form-signin">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
-        <div class="row">
-            <div class="col-12 text-center">
-                <img class="mb-4" src="/assets/vonqonnect_logo.png" alt="logo">
-            </div>
-        </div>
         <div class="row">
             <div class="col-12">
                 <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
@@ -98,7 +91,7 @@
             </div>
         </div>
     </form>
-</div>
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
