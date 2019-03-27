@@ -3,29 +3,30 @@
  * Created by PhpStorm.
  * User: sh_za
  * Date: 27-Mar-19
- * Time: 9:49 AM
+ * Time: 4:16 PM
  */
 
 namespace App\Domain\Connection;
 
 
-use App\Entity\User;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use GuzzleHttp\Client;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ListAllUsersUseCase
 {
-	private $doctrine;
+	private $client;
+	private $endPoint = '/api/v1/connections/listAllUsers';
 
-	public function __construct(ManagerRegistry $doctrine)
+	public function __construct(Client $client)
 	{
-		$this->doctrine = $doctrine;
+		$this->client = $client;
+		$this->user = $user;
 	}
 
-	public function handle(): array
+	public function handle()
 	{
-		$repository = $this->doctrine->getRepository(User::class);
-
-		return $repository->findAll();
+		dd($this->client->get($this->endPoint));
+		return [1,2,3];
 
 	}
 }
