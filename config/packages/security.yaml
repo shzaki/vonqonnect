@@ -6,21 +6,21 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        user_provider:
             entity:
                 class: App\Entity\User
-                property: email
+                property: apiKey
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: ~
+            pattern: ^/api/
+            anonymous: false
             guard:
-                entry_point: App\Security\LoginFormAuthenticator
                 authenticators:
-                    - App\Security\LoginFormAuthenticator
-                    - App\Security\TokenAuthenticator
+                    - App\Security\ApiTokenAuthenticator
+            provider: user_provider
 
             logout:
                 path: app_logout
