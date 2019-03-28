@@ -22,7 +22,7 @@ class ListAllUsersController extends AbstractController
 	public function __invoke(ListAllUsersUseCase $useCase): Response
 	{
 		return $this->render('connection/list-all-users.html.twig', [
-			'users' => $useCase->handle(),
+			'users' => json_decode($useCase->handle()),
 		]);
 	}
 }

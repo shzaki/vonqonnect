@@ -1,6 +1,14 @@
 {% extends('base.html.twig') %}
 {% block body %}
-    {% for user in users %}
-        {{ dump(user) }}
-    {% endfor %}
+
+    <table class="datatable">
+        {% for user in users %}
+            <tr>
+                <td>
+                    {{ user.email }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
 {% endblock %}

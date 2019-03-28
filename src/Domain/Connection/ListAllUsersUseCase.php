@@ -10,23 +10,26 @@ namespace App\Domain\Connection;
 
 
 use GuzzleHttp\Client;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Security;
 
 class ListAllUsersUseCase
 {
+	private $security;
 	private $client;
 	private $endPoint = '/api/v1/connections/listAllUsers';
 
-	public function __construct(Client $client)
+	public function __construct(Client $client, Security $security)
 	{
 		$this->client = $client;
-		$this->user = $user;
+		$this->security = $security;
 	}
 
 	public function handle()
 	{
-		dd($this->client->get($this->endPoint));
-		return [1,2,3];
+		$apiToken = $this->security->getToken()->getUser()->getApiToken();
 
+		$response = $this->client->get($this->endPoint, ['headers' => ['X-AUTH-TOKEN' => $apiToken]]);
+
+		return $response->getBody()->getContents();
 	}
 }
