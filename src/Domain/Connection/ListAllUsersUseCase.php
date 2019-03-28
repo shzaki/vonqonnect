@@ -3,29 +3,33 @@
  * Created by PhpStorm.
  * User: sh_za
  * Date: 27-Mar-19
- * Time: 9:49 AM
+ * Time: 4:16 PM
  */
 
 namespace App\Domain\Connection;
 
 
-use App\Entity\User;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use GuzzleHttp\Client;
+use Symfony\Component\Security\Core\Security;
 
 class ListAllUsersUseCase
 {
-	private $doctrine;
+	private $security;
+	private $client;
+	private $endPoint = '/api/v1/connections/listAllUsers';
 
-	public function __construct(ManagerRegistry $doctrine)
+	public function __construct(Client $client, Security $security)
 	{
-		$this->doctrine = $doctrine;
+		$this->client = $client;
+		$this->security = $security;
 	}
 
-	public function handle(): array
+	public function handle()
 	{
-		$repository = $this->doctrine->getRepository(User::class);
+		$apiToken = $this->security->getToken()->getUser()->getApiToken();
 
-		return $repository->findAll();
+		$response = $this->client->get($this->endPoint, ['headers' => ['X-AUTH-TOKEN' => $apiToken]]);
 
+		return $response->getBody()->getContents();
 	}
 }

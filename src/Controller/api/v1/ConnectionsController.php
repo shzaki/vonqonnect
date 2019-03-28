@@ -8,7 +8,7 @@
 
 namespace App\Controller\api\v1;
 
-use App\Domain\Connection\ListAllUsersUseCase;
+use App\ApiDomain\Connection\ListAllUsersUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
