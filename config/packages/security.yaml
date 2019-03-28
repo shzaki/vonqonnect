@@ -18,26 +18,34 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        api:
-            pattern: ^/api/
-            anonymous: false
+
+        main:
+            pattern: /
+            anonymous: ~
+
             guard:
                 entry_point: App\Security\LoginFormAuthenticator
                 authenticators:
                     - App\Security\LoginFormAuthenticator
                     - App\Security\FacebookAuthenticator
-                    - App\Security\ApiTokenAuthenticator
-            provider: api_user_provider
-
-        main:
-            anonymous: false
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
             provider: www_user_provider
+
 
             logout:
                 path: app_logout
+                target: home
+
+
+
+        api:
+            pattern: ^/api/
+            anonymous: false
+            guard:
+                authenticators:
+                    - App\Security\ApiTokenAuthenticator
+            provider: api_user_provider
+
+
 
                 # where to redirect after logout
                 # target: app_any_route
@@ -55,3 +63,4 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
