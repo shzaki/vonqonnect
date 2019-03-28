@@ -35,8 +35,6 @@ security:
                 path: app_logout
                 target: home
 
-
-
         api:
             pattern: ^/api/
             anonymous: false
