@@ -6,7 +6,7 @@
  * Time: 9:37 AM
  */
 
-namespace App\Controller\api\v1;
+namespace App\Controller\api;
 
 use App\ApiDomain\Connection\ListAllUsersApiUseCase;
 use App\ApiDomain\Connection\ListUserConnectionsApiUseCase;
@@ -15,10 +15,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ConnectionsController extends AbstractController
+class ApiConnectionsController extends AbstractController
 {
 	/**
-	 * @Route("/api/v1/connections/listAllUsers", name="api.v1.connections.listAllUsers")
+	 * @Route("/api/connections/listAllUsers", name="api.v1.connections.listAllUsers")
 	 */
 	public function listAllUsers(ListAllUsersApiUseCase $useCase): JsonResponse
 	{
@@ -28,7 +28,7 @@ class ConnectionsController extends AbstractController
 	}
 
 	/**
-	 * @Route("/api/v1/connections/listUserConnections", name="api.v1.connections.listAllUsers")
+	 * @Route("/api/connections/listUserConnections", name="api.v1.connections.listUserConnections")
 	 */
 	public function listUserConnections(ListUserConnectionsApiUseCase $useCase, Request $request): JsonResponse
 	{

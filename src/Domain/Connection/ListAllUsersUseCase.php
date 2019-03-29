@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sh_za
- * Date: 27-Mar-19
- * Time: 4:16 PM
- */
 
 namespace App\Domain\Connection;
-
 
 use GuzzleHttp\Client;
 use Symfony\Component\Security\Core\Security;
@@ -16,7 +9,7 @@ class ListAllUsersUseCase
 {
 	private $security;
 	private $client;
-	private $endPoint = '/api/v1/connections/listAllUsers';
+	private $endPoint = '/api/connections/listAllUsers';
 
 	public function __construct(Client $client, Security $security)
 	{

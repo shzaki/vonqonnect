@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sh_za
- * Date: 27-Mar-19
- * Time: 4:16 PM
- */
 
 namespace App\Domain\Connection;
-
 
 use GuzzleHttp\Client;
 use Symfony\Component\Security\Core\Security;
@@ -16,7 +9,7 @@ class ListUserConnectionsUseCase
 {
 	private $security;
 	private $client;
-	private $endPoint = '/api/v1/connections/listAllUsers';
+	private $endPoint = '/api/connections/listUserConnections';
 
 	public function __construct(Client $client, Security $security)
 	{
@@ -28,9 +21,8 @@ class ListUserConnectionsUseCase
 	{
 		$apiToken = $this->security->getToken()->getUser()->getApiToken();
 
-		$response = $this->client->get($this->endPoint, [
+		$response = $this->client->get($this->endPoint . '?user_id=' . $this->security->getToken()->getUser()->getId(), [
 			'headers' => ['X-AUTH-TOKEN' => $apiToken],
-			'query' => ['user_id' => $this->security->getToken()->getUser()->getId()],
 		]);
 
 		return $response->getBody()->getContents();
