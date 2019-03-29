@@ -12,7 +12,7 @@ class UserConnections
     /**
 	 * @ORM\Id()
      * @ORM\Column(type="integer")
-	 * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="id")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="id")
      */
     private $userId;
 

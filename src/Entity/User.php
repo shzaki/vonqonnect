@@ -17,6 +17,7 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+	 * @ORM\OneToMany(targetEntity="UserConnections", mappedBy="userId")
      */
     private $id;
 

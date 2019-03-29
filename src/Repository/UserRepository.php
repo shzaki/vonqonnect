@@ -19,6 +19,18 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+	public function findUserWithConnections($userId)
+	{
+		return $this->createQueryBuilder('user')
+			// p.category refers to the "category" property on product
+			->innerJoin('user.id', 'user_connections')
+			// selects all the category data to avoid the query
+			->addSelect('user_connections')
+			->andWhere('user_connections.user_id = :userId')
+			->setParameter('userId', $userId)
+			->getQuery()
+			->getOneOrNullResult();
+	}
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
