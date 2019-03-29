@@ -8,7 +8,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class ListUserConnectionsApiUseCase
 {
 	private $doctrine;
-	private $userId;
 
 	public function __construct(ManagerRegistry $doctrine)
 	{
