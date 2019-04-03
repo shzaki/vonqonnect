@@ -18,6 +18,6 @@ class ListAllUsersApiUseCase
 	{
 		$users = $this->doctrine->getRepository(User::class);
 
-		return $users->findAllWithConnections($userId);
+		return $users->findAllUsersWithConnections($userId);
 	}
 }

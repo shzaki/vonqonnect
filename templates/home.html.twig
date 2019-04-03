@@ -12,6 +12,10 @@
 <!-- As a link -->
 <nav class="navbar navbar-light text-right" style="background-color: #d72027;">
     <a class="navbar-brand" href="{{ path('home') }}"><img src="{{ asset('assets/vonqonnect_navbar.png') }}"></a>
+    <h1 class="text-white">Welcome {{ app.user.email }}</h1>
+    <a href="{{ path('connection.list_all_users') }}" class="text-white">List All Users</a>
+    <a href="{{ path('connection.list_user_connections') }}" class="text-white">List My Connections</a>
+    <a href="{{ path('app_logout') }}" class="text-white">Logout</a>
 </nav>
 
 <div class="container">

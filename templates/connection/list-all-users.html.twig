@@ -28,14 +28,30 @@
                                     {{ user.email }}
                                 </td>
                                 <td>
-                                    {{(user.userConnections[0].status ?? -1) | status_description }}
+                                    {% set found = false %}
+                                    {% for connection in user.userConnections %}
+                                        {% if connection.userId == app.user.id %}
+                                            {{ connection.status | status_description }}
+                                            {% set found = true %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if not found %}
+                                        {{ (-1) | status_description }}
+                                    {% endif %}
+
                                 </td>
                                 <td>
-                                    {% if user.userConnections[0] is defined %}
-                                        {% if user.userConnections[0].status == constant('App\\Entity\\UserConnection::CONNECTED') or user.userConnections[0].status == constant('App\\Entity\\UserConnection::PENDING') %}
-                                            <button class="btn btn-danger remove_connection" data-user="{{ app.user.id }}" data-connection="{{ user.id }}">Remove</button>
+                                    {% set found = false %}
+                                    {% for connection in user.userConnections %}
+                                        {% if connection.userId == app.user.id %}
+                                            {% if connection.status == constant('App\\Entity\\UserConnection::CONNECTED') or connection.status == constant('App\\Entity\\UserConnection::PENDING') %}
+                                                <button class="btn btn-danger remove_connection" data-user="{{ app.user.id }}" data-connection="{{ user.id }}">Remove</button>
+                                                {% set found = true %}
+                                            {% endif %}
                                         {% endif %}
-                                    {% else %}
+                                    {% endfor %}
+                                    {% if not found %}
                                         <button class="btn btn-success add_connection" data-user="{{ app.user.id }}" data-connection="{{ user.id }}">Add</button>
                                     {% endif %}
                                 </td>

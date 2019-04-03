@@ -30,9 +30,8 @@ class UserRepository extends ServiceEntityRepository
 			->getArrayResult();
 	}
 
-	public function findAllWithConnections($userId)
+	public function findAllUsersWithConnections($userId)
 	{
-
 		return $this->createQueryBuilder('user')
 			->leftJoin('user.userConnections', 'UserConnection')
 			->addSelect('UserConnection')
