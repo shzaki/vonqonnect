@@ -5,6 +5,7 @@ namespace App\Controller\api;
 use App\ApiDomain\Connection\AddConnectionApiUseCase;
 use App\ApiDomain\Connection\ListAllUsersApiUseCase;
 use App\ApiDomain\Connection\ListUserConnectionsApiUseCase;
+use App\ApiDomain\Connection\RemoveConnectionApiUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +37,16 @@ class ApiConnectionsController extends AbstractController
 	 * @Route("/api/connections/addConnection", name="api.connections.addConnection" , methods={"POST"})
 	 */
 	public function addConnection(AddConnectionApiUseCase $useCase, Request $request): JsonResponse
+	{
+		return $this->json($useCase->handle($request->get('user_id'), $request->get('connection_id')), 200, [], [
+			'groups' => ['main'],
+		]);
+	}
+
+	/**
+	 * @Route("/api/connections/removeConnection", name="api.connections.removeConnection" , methods={"POST"})
+	 */
+	public function removeConnection(RemoveConnectionApiUseCase $useCase, Request $request): JsonResponse
 	{
 		return $this->json($useCase->handle($request->get('user_id'), $request->get('connection_id')), 200, [], [
 			'groups' => ['main'],

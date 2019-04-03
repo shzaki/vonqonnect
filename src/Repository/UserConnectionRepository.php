@@ -44,6 +44,41 @@ class UserConnectionRepository extends ServiceEntityRepository
 		$entityManager->flush();
 	}
 
+	/**
+	 * @param int $userId
+	 * @param int $connectionId
+	 * @throws \Doctrine\ORM\ORMException
+	 * @throws \Doctrine\ORM\OptimisticLockException
+	 */
+    public function removeConnection(int $userId, int $connectionId)
+	{
+		$entityManager = $this->getEntityManager();
+
+		$connection = $entityManager
+			->getRepository(UserConnection::class)
+			->find([
+				'userId' => $userId,
+				'connection' => $connectionId,
+			]);
+
+		if($connection !== null) {
+			$entityManager->remove($connection);
+		}
+
+		$connection = $entityManager
+			->getRepository(UserConnection::class)
+			->find([
+				'userId' => $connectionId,
+				'connection' => $userId,
+			]);
+
+		if($connection !== null) {
+			$entityManager->remove($connection);
+		}
+
+		$entityManager->flush();
+	}
+
     // /**
     //  * @return UserConnection[] Returns an array of UserConnection objects
     //  */

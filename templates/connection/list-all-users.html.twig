@@ -32,7 +32,7 @@
                                 </td>
                                 <td>
                                     {% if user.userConnections[0] is defined %}
-                                        {% if user.userConnections[0].status == constant('App\\Entity\\UserConnection::CONNECTED') %}
+                                        {% if user.userConnections[0].status == constant('App\\Entity\\UserConnection::CONNECTED') or user.userConnections[0].status == constant('App\\Entity\\UserConnection::PENDING') %}
                                             <button class="btn btn-danger remove_connection" data-user="{{ app.user.id }}" data-connection="{{ user.id }}">Remove</button>
                                         {% endif %}
                                     {% else %}
@@ -67,15 +67,36 @@
 					},
                     success: function (data) {
 						thisButton.replaceWith('Pending');
-						console.log(data);
                     },
                     fail: function (data) {
-						thisButton.text('Try again');
-						console.log(data);
+						thisButton.replaceWith('Error');
 					}
 				});
 
             });
+
+			$('.remove_connection').on('click', function(e){
+				var thisButton = $(this);
+				var userId = $(this).data("user");
+				var connectionId = $(this).data("connection");
+
+				$(this).text('Removing...');
+				$.ajax({
+					url : "/api/connections/removeConnection",
+					type: "post",
+					data: {
+						'user_id': userId,
+						'connection_id': connectionId
+					},
+					success: function (data) {
+						thisButton.replaceWith('Removed');
+					},
+					fail: function (data) {
+						thisButton.replaceWith('Error');
+					}
+				});
+
+			});
 		});
     </script>
 {% endblock %}

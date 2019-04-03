@@ -31,12 +31,4 @@ class ConnectionsController extends AbstractController
 			'users' => json_decode($useCase->handle()),
 		]);
 	}
-
-	/**
-	 * @Route("/connection/add-connections/{connectionId}", name="connection.add_connection")
-	 */
-	public function addConnections(AddConnectionUseCase $useCase, int $connectionId): JsonResponse
-	{
-		return json_decode($useCase->handle($connectionId));
-	}
 }
