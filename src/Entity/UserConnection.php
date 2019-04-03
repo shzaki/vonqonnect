@@ -20,7 +20,7 @@ class UserConnection
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userConnections")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $connectionId;
+    private $connection;
 
     /**
      * @ORM\Column(type="integer")
@@ -39,14 +39,14 @@ class UserConnection
         return $this;
     }
 
-    public function getConnectionId(): ?User
+    public function getConnection(): ?User
     {
-        return $this->connectionId;
+        return $this->connection;
     }
 
-    public function setConnectionId(?User $connectionId): self
+    public function setConnection(?User $connection): self
     {
-        $this->connectionId = $connectionId;
+        $this->connection = $connection;
 
         return $this;
     }

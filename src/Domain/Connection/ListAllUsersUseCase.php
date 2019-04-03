@@ -21,7 +21,9 @@ class ListAllUsersUseCase
 	{
 		$apiToken = $this->security->getToken()->getUser()->getApiToken();
 
-		$response = $this->client->get($this->endPoint, ['headers' => ['X-AUTH-TOKEN' => $apiToken]]);
+		$response = $this->client->get($this->endPoint . '?user_id=' . $this->security->getToken()->getUser()->getId(), [
+			'headers' => ['X-AUTH-TOKEN' => $apiToken],
+		]);
 
 		return $response->getBody()->getContents();
 	}

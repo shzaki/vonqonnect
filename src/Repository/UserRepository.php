@@ -22,14 +22,24 @@ class UserRepository extends ServiceEntityRepository
 	public function findUserWithConnections($userId)
 	{
 		return $this->createQueryBuilder('user')
-			// p.category refers to the "category" property on product
 			->innerJoin('user.userConnections', 'UserConnection')
-			// selects all the category data to avoid the query
 			->addSelect('UserConnection')
 			->andWhere('UserConnection.userId = :userId')
 			->setParameter('userId', $userId)
 			->getQuery()
-			->getOneOrNullResult();
+			->getArrayResult();
+	}
+
+	public function findAllWithConnections($userId)
+	{
+
+		return $this->createQueryBuilder('user')
+			->leftJoin('user.userConnections', 'UserConnection')
+			->addSelect('UserConnection')
+			->andWhere('user.id != :userId')
+			->setParameter('userId', $userId)
+			->getQuery()
+			->getArrayResult();
 	}
     // /**
     //  * @return User[] Returns an array of User objects

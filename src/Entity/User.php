@@ -45,7 +45,7 @@ class User implements UserInterface
     private $apiToken;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserConnection", mappedBy="connectionId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\UserConnection", mappedBy="connection", orphanRemoval=true)
      */
     private $userConnections;
 
@@ -168,7 +168,7 @@ class User implements UserInterface
     {
         if (!$this->userConnections->contains($userConnection)) {
             $this->userConnections[] = $userConnection;
-            $userConnection->setConnectionId($this);
+            $userConnection->setConnection($this);
         }
 
         return $this;
@@ -179,8 +179,8 @@ class User implements UserInterface
         if ($this->userConnections->contains($userConnection)) {
             $this->userConnections->removeElement($userConnection);
             // set the owning side to null (unless already changed)
-            if ($userConnection->getConnectionId() === $this) {
-                $userConnection->setConnectionId(null);
+            if ($userConnection->getConnection() === $this) {
+                $userConnection->setConnection(null);
             }
         }
 

@@ -16,13 +16,18 @@
                     <thead>
                         <tr>
                             <th>Email</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {# @var user \App\Entity\User #}
                         {% for user in users %}
                             <tr>
                                 <td>
                                     {{ user.email }}
+                                </td>
+                                <td>
+                                    {{ user.userConnections[0].status ?? '' }}
                                 </td>
                             </tr>
                         {% endfor %}

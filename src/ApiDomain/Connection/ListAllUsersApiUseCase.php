@@ -14,10 +14,10 @@ class ListAllUsersApiUseCase
 		$this->doctrine = $doctrine;
 	}
 
-	public function handle(): array
+	public function handle(int $userId): array
 	{
 		$users = $this->doctrine->getRepository(User::class);
 
-		return $users->findAll();
+		return $users->findAllWithConnections($userId);
 	}
 }

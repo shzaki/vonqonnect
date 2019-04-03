@@ -20,9 +20,9 @@ class ApiConnectionsController extends AbstractController
 	/**
 	 * @Route("/api/connections/listAllUsers", name="api.v1.connections.listAllUsers")
 	 */
-	public function listAllUsers(ListAllUsersApiUseCase $useCase): JsonResponse
+	public function listAllUsers(ListAllUsersApiUseCase $useCase, Request $request): JsonResponse
 	{
-		return $this->json($useCase->handle(), 200, [], [
+		return $this->json($useCase->handle($request->get('user_id')), 200, [], [
 			'groups' => ['main'],
 		]);
 	}
