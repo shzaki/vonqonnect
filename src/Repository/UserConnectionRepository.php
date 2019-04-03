@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\UserConnection;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -18,6 +19,30 @@ class UserConnectionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, UserConnection::class);
     }
+
+	/**
+	 * @param int $userId
+	 * @param int $connectionId
+	 * @throws \Doctrine\ORM\ORMException
+	 * @throws \Doctrine\ORM\OptimisticLockException
+	 */
+    public function addConnection(int $userId, int $connectionId)
+	{
+		$entityManager = $this->getEntityManager();
+
+		$connection = $entityManager
+			->getRepository(User::class)
+			->find($connectionId);
+
+		$userConnection = new UserConnection();
+		$userConnection->setUserId($userId);
+		$userConnection->setConnection($connection);
+		$userConnection->setStatus(UserConnection::PENDING);
+
+		$entityManager->persist($userConnection);
+
+		$entityManager->flush();
+	}
 
     // /**
     //  * @return UserConnection[] Returns an array of UserConnection objects

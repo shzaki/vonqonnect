@@ -17,6 +17,7 @@
                         <tr>
                             <th>Email</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,6 +30,15 @@
                                 <td>
                                     {{(user.userConnections[0].status ?? -1) | status_description }}
                                 </td>
+                                <td>
+                                    {% if user.userConnections[0] is defined %}
+                                        {% if user.userConnections[0].status == constant('App\\Entity\\UserConnection::CONNECTED') %}
+                                            <button class="btn btn-danger remove_connection" data-user="{{ app.user.id }}" data-connection="{{ user.id }}">Remove</button>
+                                        {% endif %}
+                                    {% else %}
+                                        <button class="btn btn-success add_connection" data-user="{{ app.user.id }}" data-connection="{{ user.id }}">Add</button>
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -39,4 +49,33 @@
 {% endblock %}
 {% block javascripts %}
     {% include('common/datatables.html.twig') %}
+
+    <script>
+		$( document ).ready(function() {
+			$('.add_connection').on('click', function(e){
+				var thisButton = $(this);
+                var userId = $(this).data("user");
+                var connectionId = $(this).data("connection");
+
+				$(this).text('Adding...');
+				$.ajax({
+					url : "/api/connections/addConnection",
+					type: "post",
+					data: {
+						'user_id': userId,
+						'connection_id': connectionId
+					},
+                    success: function (data) {
+						thisButton.replaceWith('Pending');
+						console.log(data);
+                    },
+                    fail: function (data) {
+						thisButton.text('Try again');
+						console.log(data);
+					}
+				});
+
+            });
+		});
+    </script>
 {% endblock %}

@@ -1,17 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sh_za
- * Date: 27-Mar-19
- * Time: 3:51 PM
- */
 
 namespace App\Controller\www;
 
-
+use App\Domain\Connection\AddConnectionUseCase;
 use App\Domain\Connection\ListAllUsersUseCase;
 use App\Domain\Connection\ListUserConnectionsUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -35,5 +30,13 @@ class ConnectionsController extends AbstractController
 		return $this->render('connection/list-user-connections.html.twig', [
 			'users' => json_decode($useCase->handle()),
 		]);
+	}
+
+	/**
+	 * @Route("/connection/add-connections/{connectionId}", name="connection.add_connection")
+	 */
+	public function addConnections(AddConnectionUseCase $useCase, int $connectionId): JsonResponse
+	{
+		return json_decode($useCase->handle($connectionId));
 	}
 }

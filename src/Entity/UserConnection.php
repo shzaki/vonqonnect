@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UserConnection
 {
+	CONST PENDING = 0;
+	CONST CONNECTED = 1;
+	CONST DECLINED = 2;
+
     /**
 	 * @ORM\Id()
      * @ORM\Column(type="integer")
