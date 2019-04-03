@@ -40,6 +40,7 @@ databases:
 * Start the vagrant box by typing `vagrant up` from the `Homestead` folder
 * Make sure you have cloned the project under `C:\vonq`
 * Run `vagrant ssh` go to `/projects/vonqonnect.test` and run `composer install`
+* Setup DB using `php bin/console doctrine:migrations:migrate`
 
 
 ### Now you are ready
