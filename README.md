@@ -2,7 +2,7 @@
 
 ## Installation
 
-### Install HomeStead Vagrant box
+* Install HomeStead Vagrant box
 
 Use the following instructions to install the Homestead vagrant box
 https://laravel.com/docs/5.8/homestead
