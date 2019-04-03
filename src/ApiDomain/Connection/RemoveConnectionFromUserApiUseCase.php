@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Entity\UserConnection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
-class RemoveConnectionApiUseCase
+class RemoveConnectionFromUserApiUseCase
 {
 	private $doctrine;
 

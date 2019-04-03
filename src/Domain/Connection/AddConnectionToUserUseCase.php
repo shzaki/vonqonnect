@@ -5,11 +5,11 @@ namespace App\Domain\Connection;
 use GuzzleHttp\Client;
 use Symfony\Component\Security\Core\Security;
 
-class ListAllUsersUseCase
+class AddConnectionToUserUseCase
 {
 	private $security;
 	private $client;
-	private $endPoint = '/api/connection/list-all-users';
+	private $endPoint = '/api/connection/add-connection-to-user';
 
 	public function __construct(Client $client, Security $security)
 	{
@@ -17,12 +17,16 @@ class ListAllUsersUseCase
 		$this->security = $security;
 	}
 
-	public function handle()
+	public function handle(int $connectionId)
 	{
 		$apiToken = $this->security->getToken()->getUser()->getApiToken();
 
-		$response = $this->client->get($this->endPoint . '?user_id=' . $this->security->getToken()->getUser()->getId(), [
+		$response = $this->client->post($this->endPoint, [
 			'headers' => ['X-AUTH-TOKEN' => $apiToken],
+			'form_params' => [
+				'user_id' => $this->security->getToken()->getUser()->getId(),
+				'connection_id' => $connectionId,
+			],
 		]);
 
 		return $response->getBody()->getContents();

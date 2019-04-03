@@ -5,11 +5,11 @@ namespace App\Domain\Connection;
 use GuzzleHttp\Client;
 use Symfony\Component\Security\Core\Security;
 
-class AddConnectionUseCase
+class RemoveConnectionFromUserUseCase
 {
 	private $security;
 	private $client;
-	private $endPoint = '/api/connections/addConnection';
+	private $endPoint = '/api/connection/remove-connection-from-user';
 
 	public function __construct(Client $client, Security $security)
 	{
@@ -23,7 +23,7 @@ class AddConnectionUseCase
 
 		$response = $this->client->post($this->endPoint, [
 			'headers' => ['X-AUTH-TOKEN' => $apiToken],
-			'body' => [
+			'form_params' => [
 				'user_id' => $this->security->getToken()->getUser()->getId(),
 				'connection_id' => $connectionId,
 			],

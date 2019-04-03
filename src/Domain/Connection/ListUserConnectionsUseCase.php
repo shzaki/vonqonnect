@@ -9,7 +9,7 @@ class ListUserConnectionsUseCase
 {
 	private $security;
 	private $client;
-	private $endPoint = '/api/connections/listUserConnections';
+	private $endPoint = '/api/connection/list-user-connections';
 
 	public function __construct(Client $client, Security $security)
 	{

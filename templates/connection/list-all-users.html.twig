@@ -59,7 +59,7 @@
 
 				$(this).text('Adding...');
 				$.ajax({
-					url : "{{ path('api.connections.addConnection') }}",
+					url : "/connection/add-connection-to-user/" + connectionId,
 					type: "post",
 					data: {
 						'user_id': userId,
@@ -82,7 +82,7 @@
 
 				$(this).text('Removing...');
 				$.ajax({
-					url : "{{ path('api.connections.removeConnection') }}",
+					url : "/connection/remove-connection-from-user/" + connectionId,
 					type: "post",
 					data: {
 						'user_id': userId,
