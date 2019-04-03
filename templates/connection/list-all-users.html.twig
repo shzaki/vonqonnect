@@ -27,7 +27,7 @@
                                     {{ user.email }}
                                 </td>
                                 <td>
-                                    {{ user.userConnections[0].status ?? '' }}
+                                    {{(user.userConnections[0].status ?? -1) | status_description }}
                                 </td>
                             </tr>
                         {% endfor %}
