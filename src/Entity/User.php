@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -17,7 +19,6 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-	 * @ORM\OneToMany(targetEntity="App\Entity\UserConnections", mappedBy="userId")
      */
     private $id;
 
@@ -43,6 +44,16 @@ class User implements UserInterface
      */
     private $apiToken;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserConnection", mappedBy="connectionId", orphanRemoval=true)
+     */
+    private $userConnections;
+
+    public function __construct()
+    {
+        $this->userConnections = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,11 +65,11 @@ class User implements UserInterface
     }
 
 	public function setEmail(string $email): self
-                   {
-                       $this->email = $email;
-               
-                       return $this;
-                   }
+                                           {
+                                               $this->email = $email;
+                                       
+                                               return $this;
+                                           }
 
 	/**
      * A visual identifier that represents this user.
@@ -98,11 +109,11 @@ class User implements UserInterface
     }
 
 	public function setPassword(string $password): self
-	{
-	   $this->password = $password;
-
-	   return $this;
-	}
+                        	{
+                        	   $this->password = $password;
+                        
+                        	   return $this;
+                        	}
 
 	/**
      * @see UserInterface
@@ -141,6 +152,37 @@ class User implements UserInterface
     public function setApiToken(string $apiToken): self
     {
         $this->apiToken = $apiToken;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserConnection[]
+     */
+    public function getUserConnections(): Collection
+    {
+        return $this->userConnections;
+    }
+
+    public function addUserConnection(UserConnection $userConnection): self
+    {
+        if (!$this->userConnections->contains($userConnection)) {
+            $this->userConnections[] = $userConnection;
+            $userConnection->setConnectionId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserConnection(UserConnection $userConnection): self
+    {
+        if ($this->userConnections->contains($userConnection)) {
+            $this->userConnections->removeElement($userConnection);
+            // set the owning side to null (unless already changed)
+            if ($userConnection->getConnectionId() === $this) {
+                $userConnection->setConnectionId(null);
+            }
+        }
 
         return $this;
     }
